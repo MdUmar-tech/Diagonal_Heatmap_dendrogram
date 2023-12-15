@@ -1,9 +1,5 @@
 # Diagonal_Heatmap_dendrogram
 
-# diagonal_heatmap
-
-# Diagonal Heatmap with Dendrogram
-
 This project provides a Python script for creating a diagonal heatmap with dendrogram using Matplotlib. The script takes input data and generates an interactive heatmap visualizing relationships between variables.
 The input data should be in long form and accept both tsv and csv formate 
 example file (csv) 
