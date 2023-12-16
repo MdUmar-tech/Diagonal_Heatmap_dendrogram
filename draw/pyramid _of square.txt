@@ -1,0 +1,695 @@
+
+###############################################################################
+#################################### draw single pyramid ###########################
+###############################################################################
+####_____1______##################
+########this is for circle so if we put n=4 it will be pyramid of square#######################################
+from matplotlib.pyplot import *
+from numpy import *
+n = eval(input('enter the no. of sides greater than 2: '))
+t = arange(0,360+(360/(n)),360/(n))
+#t = arange(0,360,360/n)
+x = 10*sin(radians(t))
+y=10*cos(radians(t))
+plot(x,y)
+axis('equal')
+################ define function for above_____1______ ###########################################
+from matplotlib.pyplot import *
+from numpy import *
+import pandas as pd
+
+from matplotlib.pyplot import *
+from numpy import *
+
+def draw_rectangle(center_x, center_y):
+    n = 4
+    t = arange(0, 360 + (360 / n), 360 / n)
+    x = center_x + 10 * sin(radians(t))
+    y = center_y + 10 * cos(radians(t))
+    plot(x, y)
+
+draw_rectangle(0,0)
+
+####_____2______##################
+import matplotlib.pyplot as plt
+
+# Usage example
+fig, ax = plt.subplots(figsize=(4, 4))
+
+# Draw square without using a function
+x, y = 0, 0
+ax.grid()
+ax.set_aspect('equal')
+ax.plot([x + 10, x, x - 10, x, x + 10], [y, y - 10, y, y + 10, y], 'k', lw=0.75)
+
+plt.show()
+
+###################define function for above_____2______ ####################
+def draw_square_grid(x, y):
+    ax.grid()
+    ax.set_aspect('equal')
+    ax.plot([x + 10, x, x - 10, x, x + 10], [y, y - 10, y, y + 10, y], 'k', lw=0.75)
+    #ax.plot([x+5, x, x-5, x,  x+5], [ y, y-5,y,y+5,y], 'k', lw=0.75)
+# Usage example
+fig, ax = plt.subplots(figsize=(4, 4))
+draw_square_grid(0, 0)
+
+plt.show()
+
+######################################_____3______###############################
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Usage example without a function
+fig, ax = plt.subplots(figsize=(4, 4))
+
+x, y = 0, 0
+side_length = 10
+half_side = side_length / 2
+vertices = np.array([[x, y],
+                     [x + half_side, y - half_side],
+                     [x + 2 * half_side, y],
+                     [x + half_side, y + half_side],
+                     [x, y]])
+
+ax.set_aspect('equal')
+ax.plot(vertices[:, 0], vertices[:, 1], 'k', lw=0.75)
+
+plt.show()
+##########################define function for above_____3______ ##########################
+import matplotlib.pyplot as plt
+import numpy as np
+
+def draw_square(ax, x, y):
+    side_length = 10
+    half_side = side_length / 2
+    vertices = np.array([[x , y ],
+                         [x + half_side, y - half_side],
+                         [x + 2*half_side, y],
+                         [x+half_side, y + half_side],
+                         [x , y ]])
+
+    ax.set_aspect('equal')
+    ax.plot(vertices[:, 0], vertices[:, 1], 'k', lw=0.75)
+
+# Usage example
+fig, ax = plt.subplots(figsize=(4, 4))
+draw_square(ax, 0, 0)
+
+plt.show()
+
+###############################__________4_________
+from matplotlib.pyplot import subplots
+from numpy import array
+
+dp1, dp2 = array([1, -1]), array([-1, -1])
+
+p0 = array([0, 0])
+ptop = array([N, N])
+pbot = array([N, -N])
+
+fig, ax = subplots(figsize=(4, 7))
+ax.grid()
+ax.set_aspect('equal')
+
+# Define a function to draw a line between two points
+def draw(p0, p1):
+    ax.plot(*zip(p0, p1), 'k', lw=0.75)
+
+# Draw the main lines
+draw(p0, ptop)
+draw(p0, pbot)
+
+N = 1  # Adjust N as needed
+# Draw additional lines for the pyramid of squares
+for i in range(N):
+    j = i + 1
+    draw(p0 + dp1 * j, ptop + dp1 * j + dp2 * i)
+    draw(p0 - dp2 * j, pbot - dp2 * j - dp1 * i)
+
+# Show the plot
+show()
+############################define function for above_____4______ 
+#referencehttps://stackoverflow.com/questions/77590201/issue-with-triangles-borders-in-matplotlib/77590713?noredirect=1#comment136788549_77590713
+
+def pyramid_of_squares(N, ax=None):
+    from matplotlib.pyplot import subplots
+    from numpy import array
+    
+    if N<1 : raise ValueError("N must be > 0 (strictly positive).")
+    
+    def P(x, y): return array((x, y))
+    def draw(p0, p1): ax.plot(*zip(p0, p1), 'k', lw=0.75)
+    
+    p0 = P(0, 0)
+    ptop = P(N, N)
+    pbot = P(N,-N)
+    dp1, dp2 = P(1, -1), P(-1,-1)
+    
+    if ax is None: fig, ax = subplots(figsize=(4, 7))
+    ax.grid()
+    ax.set_aspect('equal')
+
+    draw(p0, ptop)
+    draw(p0, pbot)    
+    for i in range(N):
+        j = i+1
+        draw(p0+dp1*j, ptop+dp1*j+dp2*i)
+        draw(p0-dp2*j, pbot-dp2*j-dp1*i)
+    return ax
+
+from matplotlib.pyplot import show, subplots
+fig, axs = subplots(1, 3, figsize=(9, 4))
+for i, ax in enumerate(axs):
+    pyramid_of_squares(1+i*3, ax)
+########################################## loop diagonally to get co-ordinate pattern so above draw can be ploted in this pattern ######################
+########################so first print pattern ####################################
+#reference  
+#https://stackoverflow.com/questions/77630566/generating-alternative-pattern-in-python/77630580?noredirect=1#comment136859597_77630580
+
+n = 5
+
+for i in range(n):
+    for j in range(i + 1):
+        x = i * 10
+        y = j * 10
+        
+        print(f"{x} {y}")
+        
+        if j != 0:
+            print(f"{x} {-y}")
+'''
+0 0
+10 0
+10 10
+10 -10
+20 0
+20 10
+20 -10
+20 20
+20 -20
+30 0
+30 10
+30 -10
+30 20
+30 -20
+30 30
+30 -30
+40 0
+40 10
+40 -10
+40 20
+40 -20
+40 30
+40 -30
+40 40
+40 -40
+'''
+#___1___#######################modified code from above #######################
+def generate_coordinates(n):
+    coordinates = []
+    for i in range(n):
+        for j in range(i + 1):
+            if (i % 2 == 0 and j % 2 == 0) or (i % 2 != 0 and j % 2 != 0):
+                x = i * 10
+                y = j * 10
+                coordinates.append((x, y))
+                if j != 0:
+                    coordinates.append((x, -y))
+    return coordinates
+
+n = 5
+coordinates = generate_coordinates(n)
+
+for coord in coordinates:
+    print(coord)
+#___2___using bitwise AND (&)#################################################################
+
+n = 5
+for i in range(n):
+    if i % 2 != 0:
+        for j in range(1, i + 1):
+            if i != j & i % 2 != 0:
+                print(i * 10, j * 10)
+                print(i * 10, -j * 10)
+    elif i % 2 == 0:
+        for j in range(i + 1):
+            if j * 20 <= i * 10:
+                print(i * 10, j * 20)
+                if j != 0:
+                    print(i * 10, -j * 20)
+
+
+#___3___#################################################################
+
+n = 5
+
+for i in range(n):
+    for j in range(i + 1):
+        x = i * 10
+        y = j * 10
+        
+        if i % 2 == 0 and j % 2 == 0:
+            print(f"{x} {y}")
+            if j != 0:
+                print(f"{x} {-y}")
+        elif i % 2 != 0 and j % 2 != 0:
+            print(f"{x} {y}")
+            print(f"{x} {-y}")
+
+#___4___#################################################################
+n=6
+for i in range(n-1):
+    print(i * 10, i * 10)
+    if i!=0:
+        print(i * 10, -i * 10)
+    for j in range(i-1):
+        if i%2!=0 and j%2!=0:
+            print(i * 10, j * 10)
+            if j != 0:
+                print(i * 10, -j * 10)
+        if i%2==0 and j%2==0:
+            print(i * 10, j * 10)
+            if j != 0:
+                print(i * 10, -j * 10)
+#___5___#################################################################
+
+n = 5
+
+for i in range(n):
+    for j in range(i + 1):
+        if (i % 2 == 0 and j % 2 == 0) or (i % 2 != 0 and j % 2 != 0):
+            x = i * 10
+            y = j * 10
+            print(f"{x} {y}")
+            if j != 0:  # Avoid negative in the first row.
+                print(f"{x} -{y}")
+
+
+######################################################################################
+#############################################add anny  drawn diagram box drawn for pyramid of square into any of the the above patterns with value  #########################
+######################################################################################
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+def pyramid_of_squares(N, df, ax=None):
+    from numpy import array
+
+    if N < 2:
+        raise ValueError("N must be greater or equal to 2.")
+
+    def P(x, y):
+        return array((x, y))
+
+    def draw(p0, p1):
+        ax.plot(*zip(p0, p1), 'k', lw=0.75)
+
+    p0 = P(0, 0)
+    ptop = P(N-1, N-1)
+    pbot = P(N-1, 1-N)
+    dp1, dp2 = P(1, -1), P(-1, -1)
+
+    ax.set_aspect('equal')
+    ax.grid(False)  # Remove the background grid
+
+    draw(p0, ptop)
+    draw(p0, pbot)
+
+    for i in range(N-1):
+        j = i + 1
+        draw(p0 + dp1*j, ptop + dp1*j + dp2*i)
+        draw(p0 - dp2*j, pbot - dp2*j - dp1*i)
+
+    ax.set_xticks([])  # Remove x-axis ticks
+    ax.set_yticks([])  # Remove y-axis ticks
+
+    # Add labels to the center of each cell
+    index = 0
+    for i in range(N-1):
+        for j in range(i+1, N):
+            x_pos = (i + j) 
+            y_pos = (i - j) 
+            value = df.loc[index, 'relation']
+            ax.text(y_pos+6, x_pos-5, f'{value:.2f}',
+                    color='black', ha='center', va='center', fontsize=8)
+            index += 1
+
+    #labels = ['A', 'B', 'C']
+    labels = unique_vals
+    spacing = 2  # Adjust the spacing between labels
+    for i, label in enumerate(labels):
+        ax.text(j*spacing-4, i*spacing-5, label, color='black', ha='center', va='center', fontsize=10)
+
+# Define the dataframe
+df = pd.DataFrame({
+    "x1": ["A","A","A","A","A","B","B","B","B","C","C","C","D","D","E"],
+    "x2": ["B","C","D","E","F","C","D","E","F","D","E","F","E","F","F"],
+    "relation": [76.90,75.26,74.82,74.61,71.78,75.49,75.56,75.41,72.16,74.68,74.28,71.71,73.87,72.34,72.14]
+})
+unique_vals = pd.concat([df['x1'], df['x2']]).unique()
+#print(unique_vals)
+# Plotting
+fig, ax = plt.subplots(figsize=(4, 4))
+pyramid_of_squares(len(unique_vals), df, ax)  # Adjust the argument as needed
+plt.show()
+####################################################################################
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import Normalize
+
+def draw_rectangle(center_x, center_y, value, color, ax=None):
+    n = 4
+    t = np.arange(0, 360 + (360 / n), 360 / n)
+    x = center_x + 10 * np.sin(np.radians(t))
+    y = center_y + 10 * np.cos(np.radians(t))
+
+    # Draw the rectangle with color
+    ax.fill(x, y, color=color, edgecolor='black')
+
+    # Add text annotation with the value
+    ax.text(center_x, center_y, f'{value:.2f}', color='black', ha='center', va='center', fontsize=8)
+
+# Define the dataframe
+df = pd.DataFrame({
+    "x1": ["A","A","A","A","A","B","B","B","B","C","C","C","D","D","E"],
+    "x2": ["B","C","D","E","F","C","D","E","F","D","E","F","E","F","F"],
+    "relation": [76.90,75.26,74.82,74.61,71.78,75.49,75.56,75.41,72.16,74.68,74.28,71.71,73.87,72.34,72.14]
+})
+
+# Create a wide dataframe to store the values
+unique_vals = pd.concat([df['x1'], df['x2']]).unique()
+wide_df = pd.DataFrame(0, columns=unique_vals, index=unique_vals)
+
+# Fill the DataFrame with actual relation values diagonally
+for index, row in df.iterrows():
+    wide_df.loc[row['x1'], row['x2']] = row['relation']
+    wide_df.loc[row['x2'], row['x1']] = row['relation']
+print(wide_df)
+# Plotting
+fig, ax = plt.subplots(figsize=(8, 8))
+
+# Fill cells with color based on values
+norm = Normalize(vmin=df['relation'].min(), vmax=df['relation'].max())
+colors = plt.cm.viridis(norm(df['relation']))
+index = 0
+
+# Draw rectangles using the provided loop
+n = len(unique_vals)
+for i in range(n-1):
+    for j in range(i+1):
+        if i % 2 == 0 and j % 2 == 0:
+            draw_rectangle(i * 10, j * 10, value=wide_df.iloc[(n -1)- (i + j) // 2,(i - j) // 2], color='white', ax=ax)
+              # Adjusted indices here
+            if j!=0:
+                draw_rectangle(i * 10, -j * 10, value=wide_df.iloc[i,(n + j - i)-1], color='white', ax=ax)
+        if i % 2 != 0 and j % 2 != 0:
+            draw_rectangle(i * 10, j * 10, value=wide_df.iloc[((n %(n + (i - j)))//2+(n - i - j)-(i-j), ((n % (i+j)))//2+(n % (j + 1)))], color='white', ax=ax)
+            draw_rectangle(i * 10, -j * 10, value=wide_df.iloc[(((n-i+j-1)-i)+((i+j)%i)+j, ((i+j)%i)+i)], color='white', ax=ax)
+            
+plt.show()
+
+############################
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import Normalize
+
+def draw_rectangle(center_x, center_y, value, color, ax=None):
+    n = 4
+    t = np.arange(0, 360 + (360 / n), 360 / n)
+    x = center_x + 10 * np.sin(np.radians(t))
+    y = center_y + 10 * np.cos(np.radians(t))
+
+    # Draw the rectangle with color
+    ax.fill(x, y, color=color, edgecolor='black')
+
+    # Add text annotation with the value
+    ax.text(center_x, center_y, f'{value:.2f}', color='black', ha='center', va='center', fontsize=8)
+
+# Define the dataframe
+df = pd.DataFrame({
+    "x1": ["A","A","A","A","A","B","B","B","B","C","C","C","D","D","E"],
+    "x2": ["B","C","D","E","F","C","D","E","F","D","E","F","E","F","F"],
+    "relation": [76.90,75.26,74.82,74.61,71.78,75.49,75.56,75.41,72.16,74.68,74.28,71.71,73.87,72.34,72.14]
+})
+
+# Create a wide dataframe to store the values
+unique_vals = pd.concat([df['x1'], df['x2']]).unique()
+wide_df = pd.DataFrame(0, columns=unique_vals, index=unique_vals)
+
+# Fill the DataFrame with actual relation values diagonally
+for index, row in df.iterrows():
+    wide_df.loc[row['x1'], row['x2']] = row['relation']
+    wide_df.loc[row['x2'], row['x1']] = row['relation']
+print(wide_df)
+# Plotting
+fig, ax = plt.subplots(figsize=(8, 8))
+
+# Fill cells with color based on values
+norm = Normalize(vmin=df['relation'].min(), vmax=df['relation'].max())
+colors = plt.cm.viridis(norm(df['relation']))
+index = 0
+
+# Draw rectangles using the provided loop
+n = len(unique_vals)
+for i in range(n-1):
+    for j in range(i+1):
+        if i % 2 == 0 and j % 2 == 0:
+            draw_rectangle(i * 10, j * 10, value=wide_df.iloc[(n -1)- (i + j) // 2,(i - j) // 2], color='white', ax=ax)
+              # Adjusted indices here
+            if j!=0:
+                draw_rectangle(i * 10, -j * 10, value=wide_df.iloc[i,(n + j - i)-1], color='white', ax=ax)
+        if i % 2 != 0 and j % 2 != 0:
+            draw_rectangle(i * 10, j * 10, value=wide_df.iloc[((n %(n + (i - j)))//2+(n - i - j)-(i-j), ((n % (i+j)))//2+(n % (j + 1)))], color='white', ax=ax)
+            draw_rectangle(i * 10, -j * 10, value=wide_df.iloc[(((n-i+j-1)-i)+((i+j)%i)+j, ((i+j)%i)+i)], color='white', ax=ax)
+            
+plt.show()
+
+####################
+'''
+abs make all negetive as positive 
+a = abs(i - j) + n - abs(i - j) - 1
+b = abs(i - j) + n - 2 * abs(i - j)
+'''
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import Normalize
+
+def draw_rectangle(center_x, center_y, value, color, ax=None):
+    n = 4
+    t = np.arange(0, 360 + (360 / n), 360 / n)
+    x = center_x + 10 * np.sin(np.radians(t))
+    y = center_y + 10 * np.cos(np.radians(t))
+
+    # Draw the rectangle with color
+    ax.fill(x, y, color=color, edgecolor='black')
+
+    # Add text annotation with the value
+    ax.text(center_x, center_y, f'{value:.2f}', color='black', ha='center', va='center', fontsize=8)
+
+# Define the dataframe
+df = pd.DataFrame({
+    "x1": ["A","A","A","A","A","B","B","B","B","C","C","C","D","D","E"],
+    "x2": ["B","C","D","E","F","C","D","E","F","D","E","F","E","F","F"],
+    "relation": [76.90,75.26,74.82,74.61,71.78,75.49,75.56,75.41,72.16,74.68,74.28,71.71,73.87,72.34,72.14]
+})
+
+# Create a wide dataframe to store the values
+unique_vals = pd.concat([df['x1'], df['x2']]).unique()
+wide_df = pd.DataFrame(0, columns=unique_vals, index=unique_vals)
+
+# Fill the DataFrame with actual relation values diagonally
+for index, row in df.iterrows():
+    wide_df.loc[row['x1'], row['x2']] = row['relation']
+    wide_df.loc[row['x2'], row['x1']] = row['relation']
+print(wide_df)
+# Plotting
+fig, ax = plt.subplots(figsize=(8, 8))
+
+# Fill cells with color based on values
+norm = Normalize(vmin=df['relation'].min(), vmax=df['relation'].max())
+colors = plt.cm.viridis(norm(df['relation']))
+index = 0
+
+# Draw rectangles using the provided loop
+n = len(unique_vals)
+for i in range(n-1):
+    for j in range(i+1):
+        if i % 2 == 0 and j % 2 == 0:
+            print(n,i,j,"a")
+            print(n-(n-i), n-1,"a1")
+            #print(n-i-j+1,i,"n")
+            print(i * 10, j * 10,"a2")
+            #draw_rectangle(i * 10, j * 10, value=wide_df.iloc[n-i-1, i-j], color='white', ax=ax)
+            #draw_rectangle(i * 10, j * 10, value=wide_df.iloc[(n -j)-(i-j)-1,(n - j) - (n - i - j)-j], color='white', ax=ax)
+            draw_rectangle(i * 10, j * 10, value=wide_df.iloc[(n -1)- (i + j) // 2,(i - j) // 2], color='white', ax=ax)
+              # Adjusted indices here
+            if j!=0:
+                print(n,i, j,"b")
+                print(n-i-1, 0,"b1")
+                print(i * 10, -j * 10,"b2")#n-(n-j), n-j
+                draw_rectangle(i * 10, -j * 10, value=wide_df.iloc[i,(n + j - i)-1], color='white', ax=ax)
+        if i % 2 != 0 and j % 2 != 0:
+            print(n,i,j,"c")
+            print(j, n-1,"c1")
+            print(i * 10, j * 10,"c2")#n-j-1, i+i-(j+j
+            draw_rectangle(i * 10, j * 10, value=wide_df.iloc[((n %(n + (i - j)))//2+(n - i - j)-(i-j), ((n % (i+j)))//2+(n % (j + 1)))], color='white', ax=ax)
+            print(n,i,j,"d")
+            print(j, n-1,"d1")
+            print(i * 10, -j * 10,"d2")#n-(n-j), n-1
+            draw_rectangle(i * 10, -j * 10, value=wide_df.iloc[(((n-i+j-1)-i)+((i+j)%i)+j, ((i+j)%i)+i)], color='white', ax=ax)
+            
+plt.show()
+############################################
+
+
+
+############################################
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import Normalize
+import matplotlib.pyplot as plt
+import numpy as np
+
+def draw_rectangle(center_x, center_y, ax,value):
+    n = 4
+    t = np.arange(0, 360 + (360 / n), 360 / n)
+    x = center_x + 10 * np.sin(np.radians(t))
+    y = center_y + 10 * np.cos(np.radians(t))
+    ax.text(center_x, center_y, f"{value:.2f}", ha='center', va='center', fontsize=8)
+    # Add text annotation with the value
+    #ax.text(center_x, center_y, f'{value:.2f}', color='black', ha='center', va='center', fontsize=8)
+    ax.plot(x, y, 'k', lw=0.75)
+
+def draw_pyramid_of_squares(n,wide_df):
+    fig, ax = plt.subplots(figsize=(4, 7))
+    ax.grid()
+    ax.set_aspect('equal')
+    for i in range(n):
+        for j in range(i + 1):
+            if (i % 2 == 0 and j % 2 == 0) or (i % 2 != 0 and j % 2 != 0):
+                x = i * 10
+                y = j * 10
+                value = wide_df.iloc[(n)- (i + j) // 2,(i - j) // 2]
+                draw_rectangle(x, y, ax,value)
+                if j != 0:  # Avoid negative in the first row.
+                    value = wide_df.iloc[(n)- (i - j) // 2,(i + j) // 2]
+                    print(n,i,j)
+                    print(x,y)
+                    draw_rectangle(x, -y, ax,value)
+
+
+    plt.show()
+# Example usage:
+df = pd.DataFrame({
+    "x1": ["A","A","A","A","A","B","B","B","B","C","C","C","D","D","E"],
+    "x2": ["B","C","D","E","F","C","D","E","F","D","E","F","E","F","F"],
+    "relation": [76.90,75.26,74.82,74.61,71.78,75.49,75.56,75.41,72.16,74.68,74.28,71.71,73.87,72.34,72.14]
+})
+
+unique_vals = pd.concat([df['x1'], df['x2']]).unique()
+wide_df = pd.DataFrame(0, columns=unique_vals, index=unique_vals)
+
+for index, row in df.iterrows():
+    wide_df.loc[row['x1'], row['x2']] = row['relation']
+    wide_df.loc[row['x2'], row['x1']] = row['relation']
+print(wide_df)
+# Example usage:
+draw_pyramid_of_squares(5,wide_df)
+##############################################################################################
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+def draw_rectangle(center_x, center_y, value, ax=None):
+    n = 4
+    t = np.arange(0, 360 + (360 / n), 360 / n)
+    x = center_x + 10 * np.sin(np.radians(t))
+    y = center_y + 10 * np.cos(np.radians(t))
+
+    # Draw the rectangle without filling
+    ax.plot(x, y, color='black')
+
+    # Add text annotation with the value
+    ax.text(center_x, center_y, f'{value:.2f}', color='black', ha='center', va='center', fontsize=8)
+
+# Rest of your code remains unchanged
+
+# Plotting
+fig, ax = plt.subplots(figsize=(8, 8))
+
+# Draw rectangles using the provided loop
+n = len(unique_vals)
+
+for i in range(n-1):
+    draw_rectangle(i * 10, i * 10, value=wide_df.iloc[n-i-1, 0], ax=ax)
+    if i != 0:
+        draw_rectangle(i * 10, -i * 10, value=wide_df.iloc[n-(n-i),n-1], ax=ax)
+    for j in range(i-1):
+        if i%2!=0 and j%2!=0:
+            print(i * 10, -i * 10)
+            draw_rectangle(i * 10, j * 10, value=wide_df.iloc[i-j-1,n-i], ax=ax)
+
+            if j != 0:
+                draw_rectangle(i * 10, -j * 10, value=wide_df.iloc[2,4], ax=ax)
+        if i%2==0 and j%2==0:
+            draw_rectangle(i * 10, j * 10, value=wide_df.iloc[i-j-1,n-i], ax=ax)
+            if j != 0:
+                print(i * 10, -i * 10)
+                draw_rectangle(i * 10, -j * 10, value=wide_df.iloc[4,3], ax=ax)
+
+
+# Show the plot
+plt.show()
+
+
+#################################################################solved pattern###############
+#solved
+'''
+0 4
+2 4 
+0 2
+'''
+#n-i-j, i-j
+n = 6
+for i in range(n-1):
+    for j in range(i+1):
+        if i % 2 == 0 and j % 2 == 0:
+            print()
+            if j != 0:
+                print()
+        if i % 2 != 0 and j % 2 != 0:
+            print(n, i, j,"b")
+            print(i-j,(n-i-1)+(i - j)%(n+1))##correct
+            print(n-i-j, i-j)
+            print(n-(n-(i+j-2)), n-(i+j-1)-1)
+            print()
+###########
+'''
+2 5
+4 3
+4 5
+'''
+#solved
+n = len(unique_vals)
+for i in range(n-1):
+    for j in range(i+1):
+        if i % 2 == 0 and j % 2 == 0:
+            print()
+            if j!=0:
+                print(n,i, j,"b")
+                #print(n-(n-j), n-1)
+                #print((i-j), j+(n-i-1))
+                #print((n - i - j)+i)
+                #print(i+(j-n),(i + j) if i % 2 == 0 else (i - j))
+                print(i,(n + j - i)-1)
+                #print(abs(i - j) + n - abs(i - j) - 1)
+        if i % 2 != 0 and j % 2 != 0:
+            print()
