@@ -739,3 +739,23 @@ for i in range(n-1):
             print(n,i,j,"b")
             print((n-i+j-1)-i)
             print(((n-i+j-1)-i)+((i+j)%i)+j, ((i+j)%i)+i)
+############################
+n = 6
+#solved 
+'''
+6 0 0 = 5 0
+6 2 0 = 3 2 # 1 4
+6 2 2 = 3 0 
+6 4 0 = 1 4 #3 2
+6 4 2 = 1 2
+6 4 4 = 1 0
+'''
+for i in range(n):
+    for j in range(i+1):
+        if i % 2 != 0 or j % 2 != 0:
+            continue
+
+        result_1 = (n -1)- (i + j) // 2
+        result_2 = (i - j) // 2
+        print(f"{n} {i} {j} = {result_1} {result_2}")
+
