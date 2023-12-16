@@ -648,6 +648,33 @@ for i in range(n-1):
 
 # Show the plot
 plt.show()
+####################################################################################
+import matplotlib.pyplot as plt
+import numpy as np
+
+def draw_square(ax, x, y):
+    ax.plot([x + 10, x, x - 10, x, x + 10], [y, y - 10, y, y + 10, y], 'k', lw=0.75)
+
+def draw_pyramid_of_squares(n):
+    fig, ax = plt.subplots(figsize=(4, 7))
+    ax.grid()
+    ax.set_aspect('equal')
+
+    for i in range(n):
+        for j in range(i+1):
+            if (i % 2 == 0 and j % 2 == 0) or (i % 2 != 0 and j % 2 != 0): # Check if both row and column indices are even for alternating sets
+                x = i * 10
+                y = j * 10
+                print(i,j)
+                draw_square(ax, x, y)
+
+                if j != 0:  # avoid negative in 0.
+                    draw_square(ax, x, -y)
+                    print(i,-j)
+    plt.show()
+
+# Example usage:
+draw_pyramid_of_squares(5)
 
 
 #################################################################solved pattern###############
